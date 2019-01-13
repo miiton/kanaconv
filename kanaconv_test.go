@@ -42,8 +42,8 @@ func BenchmarkKatakanaToHiragana(b *testing.B) {
 
 func TestHankakuToZenkaku(t *testing.T) {
 	var result string
-	result = HankakuToZenkaku("ﾊﾝｶｸｦｾﾞﾝｶｸﾆﾍﾝｶﾝｼﾏｽ0123456789")
-	if result != "ハンカクヲゼンカクニヘンカンシマス０１２３４５６７８９" {
+	result = HankakuToZenkaku("ﾊﾝｶｸｦ ｾﾞﾝｶｸﾆ ﾍﾝｶﾝｼﾏｽ0123456789")
+	if result != "ハンカクヲ　ゼンカクニ　ヘンカンシマス０１２３４５６７８９" {
 		t.Errorf("fail! %s", result)
 	}
 }
@@ -56,8 +56,8 @@ func BenchmarkHankakuToZenkaku(b *testing.B) {
 
 func TestZenkakuToHankaku(t *testing.T) {
 	var result string
-	result = ZenkakuToHankaku("ゼンカクヲハンカクニヘンカンシマス０１２３４５６７８９")
-	if result != "ｾﾞﾝｶｸｦﾊﾝｶｸﾆﾍﾝｶﾝｼﾏｽ0123456789" {
+	result = ZenkakuToHankaku("ゼンカクヲ　ハンカクニ　ヘンカンシマス０１２３４５６７８９")
+	if result != "ｾﾞﾝｶｸｦ ﾊﾝｶｸﾆ ﾍﾝｶﾝｼﾏｽ0123456789" {
 		t.Errorf("fail! %s", result)
 	}
 }
@@ -70,8 +70,8 @@ func BenchmarkZenkakuToHankaku(b *testing.B) {
 
 func TestSmartConv(t *testing.T) {
 	var result string
-	result = SmartConv("ｶﾀｶﾅは全角に統一ＥＩＳＵＵＪＩ＋＝−，記号は半角に統一します")
-	if result != "カタカナは全角に統一EISUUJI+=-,記号は半角に統一します" {
+	result = SmartConv("ｶﾀｶﾅは全角に統一ＥＩＳＵＵＪＩ＋＝−，記号は　半角に 統一します")
+	if result != "カタカナは全角に統一EISUUJI+=-,記号は 半角に 統一します" {
 		t.Errorf("fail! %s", result)
 	}
 }
