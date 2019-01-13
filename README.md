@@ -36,13 +36,30 @@ func main() {
 ```
 % go test -bench .
 PASS
-BenchmarkHiraganaToKatakana-4	 1000000	      1657 ns/op
-BenchmarkKatakanaToHiragana-4	 1000000	      1597 ns/op
-BenchmarkHankakuToZenkaku-4  	 1000000	      1995 ns/op
-BenchmarkZenkakuToHankaku-4  	 1000000	      2008 ns/op
-BenchmarkSmartConv-4         	 1000000	      2063 ns/op
-ok  	github.com/miiton/kanaconv	9.450s
+BenchmarkHiraganaToKatakana-4    1000000      1657 ns/op
+BenchmarkKatakanaToHiragana-4    1000000      1597 ns/op
+BenchmarkHankakuToZenkaku-4      1000000      1995 ns/op
+BenchmarkZenkakuToHankaku-4      1000000      2008 ns/op
+BenchmarkSmartConv-4             1000000      2063 ns/op
+ok      github.com/miiton/kanaconv9.450s
 ```
+
+* MacBook Pro (15-inch, 2016)
+
+```
+% go test -bench .
+goos: darwin
+goarch: amd64
+pkg: github.com/miiton/kanaconv
+BenchmarkHiraganaToKatakana-8    3000000       533 ns/op
+BenchmarkKatakanaToHiragana-8    3000000       519 ns/op
+BenchmarkHankakuToZenkaku-8      2000000       795 ns/op
+BenchmarkZenkakuToHankaku-8      2000000       709 ns/op
+BenchmarkSmartConv-8             2000000       820 ns/op
+PASS
+ok      github.com/miiton/kanaconv      11.271s
+```
+
 
 ## Referenced
 
