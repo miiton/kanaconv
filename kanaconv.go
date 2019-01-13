@@ -93,9 +93,9 @@ var smart = strings.NewReplacer(
 var kanaCase = unicode.SpecialCase{
 	// ァ-ヴ
 	unicode.CaseRange{
-		0x3040,
-		0x3094,
-		[unicode.MaxCase]rune{
+		Lo: 0x3040,
+		Hi: 0x3094,
+		Delta: [unicode.MaxCase]rune{
 			0x30a1 - 0x3041,
 			0,
 			0,
@@ -103,9 +103,9 @@ var kanaCase = unicode.SpecialCase{
 	},
 	// ぁ-ゔ
 	unicode.CaseRange{
-		0x30a0,
-		0x30f4,
-		[unicode.MaxCase]rune{
+		Lo: 0x30a0,
+		Hi: 0x30f4,
+		Delta: [unicode.MaxCase]rune{
 			0,
 			0x3041 - 0x30a1,
 			0,
@@ -116,9 +116,9 @@ var kanaCase = unicode.SpecialCase{
 var zenhanCase = unicode.SpecialCase{
 	// 0-9
 	unicode.CaseRange{
-		0x0030,
-		0x0039,
-		[unicode.MaxCase]rune{
+		Lo: 0x0030,
+		Hi: 0x0039,
+		Delta: [unicode.MaxCase]rune{
 			0xff10 - 0x0030,
 			0,
 			0,
@@ -126,9 +126,9 @@ var zenhanCase = unicode.SpecialCase{
 	},
 	// ０-９
 	unicode.CaseRange{
-		0xff10,
-		0xff19,
-		[unicode.MaxCase]rune{
+		Lo: 0xff10,
+		Hi: 0xff19,
+		Delta: [unicode.MaxCase]rune{
 			0,
 			0x0030 - 0xff10,
 			0,
@@ -136,9 +136,9 @@ var zenhanCase = unicode.SpecialCase{
 	},
 	// ｧ-ﾝ
 	unicode.CaseRange{
-		0xff67,
-		0xff9D,
-		[unicode.MaxCase]rune{
+		Lo: 0xff67,
+		Hi: 0xff9D,
+		Delta: [unicode.MaxCase]rune{
 			0x30a1 - 0xff67,
 			0,
 			0,
@@ -146,9 +146,9 @@ var zenhanCase = unicode.SpecialCase{
 	},
 	// ァ-ン
 	unicode.CaseRange{
-		0x30a1,
-		0x30f3,
-		[unicode.MaxCase]rune{
+		Lo: 0x30a1,
+		Hi: 0x30f3,
+		Delta: [unicode.MaxCase]rune{
 			0,
 			0xff67 - 0x30a1,
 			0,
