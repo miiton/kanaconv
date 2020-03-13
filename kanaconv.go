@@ -2,7 +2,48 @@ package kanaconv
 
 import (
 	"strings"
-	"unicode"
+)
+
+var hiragana2katakana = strings.NewReplacer(
+	"が", "ガ", "ぎ", "ギ", "ぐ", "グ", "げ", "ゲ", "ご", "ゴ",
+	"ざ", "ザ", "じ", "ジ", "ず", "ズ", "ぜ", "ゼ", "ぞ", "ゾ",
+	"だ", "ダ", "ぢ", "ヂ", "づ", "ヅ", "で", "デ", "ど", "ド",
+	"ば", "バ", "び", "ビ", "ぶ", "ブ", "べ", "ベ", "ぼ", "ボ",
+	"ぱ", "パ", "ぴ", "ピ", "ぷ", "プ", "ぺ", "ペ", "ぽ", "ポ",
+	"ゔ", "ヴ",
+	"あ", "ア", "い", "イ", "う", "ウ", "え", "エ", "お", "オ",
+	"か", "カ", "き", "キ", "く", "ク", "け", "ケ", "こ", "コ",
+	"さ", "サ", "し", "シ", "す", "ス", "せ", "セ", "そ", "ソ",
+	"た", "タ", "ち", "チ", "つ", "ツ", "て", "テ", "と", "ト",
+	"な", "ナ", "に", "ニ", "ぬ", "ヌ", "ね", "ネ", "の", "ノ",
+	"は", "ハ", "ひ", "ヒ", "ふ", "フ", "へ", "ヘ", "ほ", "ホ",
+	"ま", "マ", "み", "ミ", "む", "ム", "め", "メ", "も", "モ",
+	"や", "ヤ", "ゆ", "ユ", "よ", "ヨ",
+	"ら", "ラ", "り", "リ", "る", "ル", "れ", "レ", "ろ", "ロ",
+	"わ", "ワ", "を", "ヲ", "ん", "ン",
+	"ぁ", "ァ", "ぃ", "ィ", "ぅ", "ゥ", "ぇ", "ェ", "ぉ", "ォ",
+	"っ", "ッ", "ゃ", "ャ", "ゅ", "ュ", "ょ", "ョ",
+)
+
+var katakana2hiragana = strings.NewReplacer(
+	"ガ", "が", "ギ", "ぎ", "グ", "ぐ", "ゲ", "げ", "ゴ", "ご",
+	"ザ", "ざ", "ジ", "じ", "ズ", "ず", "ゼ", "ぜ", "ゾ", "ぞ",
+	"ダ", "だ", "ヂ", "ぢ", "ヅ", "づ", "デ", "で", "ド", "ど",
+	"バ", "ば", "ビ", "び", "ブ", "ぶ", "ベ", "べ", "ボ", "ぼ",
+	"パ", "ぱ", "ピ", "ぴ", "プ", "ぷ", "ペ", "ぺ", "ポ", "ぽ",
+	"ヴ", "ゔ",
+	"ア", "あ", "イ", "い", "ウ", "う", "エ", "え", "オ", "お",
+	"カ", "か", "キ", "き", "ク", "く", "ケ", "け", "コ", "こ",
+	"サ", "さ", "シ", "し", "ス", "す", "セ", "せ", "ソ", "そ",
+	"タ", "た", "チ", "ち", "ツ", "つ", "テ", "て", "ト", "と",
+	"ナ", "な", "ニ", "に", "ヌ", "ぬ", "ネ", "ね", "ノ", "の",
+	"ハ", "は", "ヒ", "ひ", "フ", "ふ", "ヘ", "へ", "ホ", "ほ",
+	"マ", "ま", "ミ", "み", "ム", "む", "メ", "め", "モ", "も",
+	"ヤ", "や", "ユ", "ゆ", "ヨ", "よ",
+	"ラ", "ら", "リ", "り", "ル", "る", "レ", "れ", "ロ", "ろ",
+	"ワ", "わ", "ヲ", "を", "ン", "ん",
+	"ァ", "ぁ", "ィ", "ぃ", "ゥ", "ぅ", "ェ", "ぇ", "ォ", "ぉ",
+	"ッ", "っ", "ャ", "ゃ", "ュ", "ゅ", "ョ", "ょ",
 )
 
 var hankaku2zenkaku = strings.NewReplacer(
@@ -92,80 +133,14 @@ var smart = strings.NewReplacer(
 	"＆", "&", "’", "'", "　", " ",
 )
 
-var kanaCase = unicode.SpecialCase{
-	// ァ-ヴ
-	unicode.CaseRange{
-		Lo: 0x3040,
-		Hi: 0x3094,
-		Delta: [unicode.MaxCase]rune{
-			0x30a1 - 0x3041,
-			0,
-			0,
-		},
-	},
-	// ぁ-ゔ
-	unicode.CaseRange{
-		Lo: 0x30a0,
-		Hi: 0x30f4,
-		Delta: [unicode.MaxCase]rune{
-			0,
-			0x3041 - 0x30a1,
-			0,
-		},
-	},
-}
-
-var zenhanCase = unicode.SpecialCase{
-	// 0-9
-	unicode.CaseRange{
-		Lo: 0x0030,
-		Hi: 0x0039,
-		Delta: [unicode.MaxCase]rune{
-			0xff10 - 0x0030,
-			0,
-			0,
-		},
-	},
-	// ０-９
-	unicode.CaseRange{
-		Lo: 0xff10,
-		Hi: 0xff19,
-		Delta: [unicode.MaxCase]rune{
-			0,
-			0x0030 - 0xff10,
-			0,
-		},
-	},
-	// ｧ-ﾝ
-	unicode.CaseRange{
-		Lo: 0xff67,
-		Hi: 0xff9D,
-		Delta: [unicode.MaxCase]rune{
-			0x30a1 - 0xff67,
-			0,
-			0,
-		},
-	},
-	// ァ-ン
-	unicode.CaseRange{
-		Lo: 0x30a1,
-		Hi: 0x30f3,
-		Delta: [unicode.MaxCase]rune{
-			0,
-			0xff67 - 0x30a1,
-			0,
-		},
-	},
-}
-
 // HiraganaToKatakana はひらがなをカタカナに変換する
 func HiraganaToKatakana(s string) string {
-	return strings.ToUpperSpecial(kanaCase, s)
+	return hiragana2katakana.Replace(s)
 }
 
 // KatakanaToHiragana はカタカナをひらがなに変換する
 func KatakanaToHiragana(s string) string {
-	return strings.ToLowerSpecial(kanaCase, s)
+	return katakana2hiragana.Replace(s)
 }
 
 // ZenkakuToHankaku は全角文字を半角に変換する

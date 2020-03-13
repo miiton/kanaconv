@@ -14,6 +14,14 @@ func TestHiraganaToKatakana(t *testing.T) {
 	if result != "ヴァイオリン" {
 		t.Errorf("fail! %s", result)
 	}
+	result = HiraganaToKatakana("abcdefghijklmnopqrstuvwxyz")
+	if result != "abcdefghijklmnopqrstuvwxyz" {
+		t.Errorf("fail! %s", result)
+	}
+	result = HiraganaToKatakana("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	if result != "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
+		t.Errorf("fail! %s", result)
+	}
 }
 
 func BenchmarkHiraganaToKatakana(b *testing.B) {
@@ -30,6 +38,14 @@ func TestKatakanaToHiragana(t *testing.T) {
 	}
 	result = KatakanaToHiragana("ヴァイオリン")
 	if result != "ゔぁいおりん" {
+		t.Errorf("fail! %s", result)
+	}
+	result = KatakanaToHiragana("abcdefghijklmnopqrstuvwxyz")
+	if result != "abcdefghijklmnopqrstuvwxyz" {
+		t.Errorf("fail! %s", result)
+	}
+	result = KatakanaToHiragana("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	if result != "ABCDEFGHIJKLMNOPQRSTUVWXYZ" {
 		t.Errorf("fail! %s", result)
 	}
 }
